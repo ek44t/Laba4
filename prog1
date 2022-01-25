@@ -1,0 +1,94 @@
+/* fig.:lab4.cpp ******************************************/
+/****************************************************************/
+/* Filename:lab4.cpp **************************************/
+/* Abstract: Sample C++ - program *******************************/
+/* Description:  ******/
+/* Version:1.1 **************************************************/
+/* Creation Date: 10.12.2021 ************************************/
+/* Author: Ekaterina Komarova ************************************/
+/****************************************************************/
+
+
+#include <iostream>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+pair<pair<int, int>, int> min_arr(int size_1, int size_2, int** arr)
+{
+	int min = INT32_MAX;
+	int min_i, min_j;
+	for (int i = 0; i < size_1; i++)
+	{
+		for (int j = 0; j < size_2; j++)
+		{
+			if (abs(arr[i][j]) < min)
+			{
+				min = arr[i][j];
+				min_i = i;
+				min_j = j;
+			}
+		}
+	}
+	return { {min_i, min_j}, min };
+}
+
+void matrixes()
+{
+	int n, m, l;
+	cin >> n >> m >> l;
+
+	int** a = new int* [n];
+	for (int i = 0; i < n; i++)
+	{
+		a[i] = new int[m];
+	}
+	int** b = new int* [m];
+	for (int i = 0; i < m; i++)
+	{
+		b[i] = new int[l];
+	}
+
+	int ccounter = 0;
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			a[i][j] = ccounter;
+			ccounter++;
+		}
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < l; j++)
+		{
+			b[i][j] = ccounter;
+			ccounter++;
+		}
+	}
+
+	pair<pair<int, int>, int> a_res = min_arr(n, m, a);
+	pair<pair<int, int>, int> b_res = min_arr(m, l, b);
+
+	int k = (a_res.first.first + b_res.first.first) - (a_res.first.second + a_res.first.second);
+	int betta = (a_res.second > b_res.second) ? a_res.second : b_res.second;
+
+	cout << "K: " << k << " Betta: " << betta;
+}
+
+int main()
+{
+	printf_s(
+			"***********************************************************\n\
+			*Nizhniy Novgorod Technical University*\n\
+			* Study work number 4. Task number 1. *\n\
+			*Performed student 21IVT-2 Komarova Ekaterina*\n\
+			***********************************************************\n"
+		);
+	matrixes();
+
+	return 0;
+}
